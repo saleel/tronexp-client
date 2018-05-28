@@ -1,0 +1,45 @@
+{
+  "name": "tronexp-client",
+  "version": "1.0.0",
+  "description": "TRON Blockchain Explorer",
+  "scripts": {
+    "dev":
+      "NODE_ENV=development API_URL=http://localhost:3000 ./node_modules/parcel-bundler/bin/cli.js -p 3001 ./src/index.html",
+    "build":
+      "rm -rf dist && npm install && NODE_ENV=production ./node_modules/parcel-bundler/bin/cli.js build ./src/index.html --out-dir ./dist --public-url /",
+    "start": "(cd ./dist && http-server -p 3001 .)"
+  },
+  "dependencies": {
+    "@tronprotocol/wallet-api": "0.0.35",
+    "autoprefixer": "^7.2.1",
+    "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react-app": "^3.1.0",
+    "bootstrap": "^4.1.1",
+    "chart.js": "^2.7.2",
+    "datamaps": "^0.5.8",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.1",
+    "node-sass": "^4.9.0",
+    "parcel-bundler": "^1.8.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.2",
+    "react-chartjs-2": "^2.7.2",
+    "react-dom": "^16.3.2",
+    "react-loading": "^2.0.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-twitter-widgets": "^1.7.1",
+    "store": "^2.0.12"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0"
+  }
+}

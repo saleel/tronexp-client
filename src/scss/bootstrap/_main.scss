@@ -1,0 +1,51 @@
+/*!
+ * Bootstrap v4.0.0 (https://getbootstrap.com)
+ * Copyright 2011-2018 The Bootstrap Authors
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+@import "core/functions";
+@import "variables";
+@import "core/mixins";
+@import "core/root";
+@import "core/reboot";
+@import "core/type";
+@import "core/images";
+// @import "core/code";
+@import "core/grid";
+@import "core/tables";
+@import "core/forms";
+@import "core/buttons";
+// @import "core/transitions";
+@import "core/dropdown";
+@import "core/button-group";
+@import "core/input-group";
+// @import "core/custom-forms";
+@import "core/nav";
+// @import "core/navbar";
+// @import "core/card";
+// @import "core/breadcrumb";
+@import "core/pagination";
+@import "core/badge";
+// @import "core/jumbotron";
+// @import "core/alert";
+// @import "core/progress";
+// @import "core/media";
+// @import "core/list-group";
+// @import "core/close";
+// @import "core/modal";
+// @import "core/tooltip";
+// @import "core/popover";
+// @import "core/carousel";
+@import "core/utilities";
+// @import "core/print";
+
+// Override bootstrap core scss
+@import "tables";
+@import "type";
+@import "badge";
+@import "nav";
+@import "button";
+@import "pagination";
