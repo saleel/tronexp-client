@@ -9,7 +9,7 @@ class CreateWalletPage extends React.PureComponent {
     super(props);
 
     this.state = {
-      step: 3,
+      step: 1,
       password: '',
     };
 
