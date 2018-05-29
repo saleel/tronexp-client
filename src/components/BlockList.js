@@ -25,7 +25,7 @@ const BlockList = ({ blocks, title }) => {
               <Link
                 to={`/blocks/${b.number}`}
                 className="block-container"
-                style={{ minWidth: '400px' }}
+                style={{ minWidth: '300px' }}
               >
                 <div className="recent-block-head">
                   <div className="badge badge-primary-inverted">{formatTime(b.timestamp)}</div>

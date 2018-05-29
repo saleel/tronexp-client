@@ -29,9 +29,14 @@ class CreateWalletPage extends React.PureComponent {
     });
   }
 
-  async onLoginClick() {
+  onLoginClick() {
     const { address, privateKey } = this.state;
-    await api.saveWallet({ address, key: privateKey });
+    const created = api.saveWallet(privateKey);
+
+    if (created.address !== address) {
+      alert('Unable to create wallet');
+      api.removeWallet();
+    }
 
     this.setState({
       step: 3,
@@ -49,14 +54,21 @@ class CreateWalletPage extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="row">
-          <div className="col-sm-12 mb-3">
-            <p>A new account and private key will be generated for you.</p>
+          <div className="col mb-3">
             <p>
+              Click the Create Wallet button to create a new TRON wallet. A new account and private
+              key will be generated for you.
+            </p>
+            {/* <p>
               Create a password for your private key. You will need the key and this password to
               unlock the wallet
+            </p> */}
+            <p>
+              The account is created offline and is stored in your browser local data. This account
+              will be a part of Tron Network only when there is a transaction to this account.
             </p>
           </div>
-          <div className="col-sm-6">
+          {/* <div className="col-sm-6">
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
@@ -71,14 +83,14 @@ class CreateWalletPage extends React.PureComponent {
                 }}
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="text-right mt-3">
-          <btn onClick={this.onGenerateClick} className="btn btn-white">
+          <button onClick={this.onGenerateClick} className="btn btn-white">
             <i className="os-icon os-icon-mail-18" />
             <span>Create Wallet</span>
-          </btn>
+          </button>
         </div>
       </React.Fragment>
     );
@@ -90,30 +102,31 @@ class CreateWalletPage extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="row">
-          <div className="col-12 col-sm-9">
+          <div className="col">
             <p>Your account address is</p>
             <div className="form-group">
               {address && <input className="form-control" type="text" readOnly value={address} />}
             </div>
-          </div>
-          <div className="col-12 col-sm-9">
             <p>You can access your wallet using the below private key.</p>
-            <p className="alert alert-warn">
-              Save this key somewhere. If you lose it, you lose your account and all balance in it.
-            </p>
             <div className="form-group">
               {privateKey && (
                 <input className="form-control" type="text" readOnly value={privateKey} />
               )}
             </div>
+            <hr />
+            <p className="alert alert-danger" role="alert">
+              Save this key somewhere safe (write it down on a paper). If you lose it, you lose your
+              account and all balance in it.
+            </p>
+            <p>Click Continue once you have saved the private key</p>
           </div>
         </div>
 
         <div className="text-right mt-3">
-          <btn onClick={this.onLoginClick} className="btn btn-white btn-md">
+          <button onClick={this.onLoginClick} className="btn btn-white btn-md">
             <i className="os-icon os-icon-wallet-loaded" />
-            <span>Login</span>
-          </btn>
+            <span>Continue</span>
+          </button>
         </div>
       </React.Fragment>
     );
@@ -122,7 +135,7 @@ class CreateWalletPage extends React.PureComponent {
   renderLoggedInStep() {
     return (
       <div className="row">
-        <div className="col-12 col-sm-9">
+        <div className="col">
           <p className="m-0">
             You are now logged in with your newly created wallet. You can access your wallet by
             clicking the below button

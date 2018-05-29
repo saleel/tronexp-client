@@ -5,61 +5,6 @@ import Tweets from './Tweets';
 import BuyTron from './BuyTron';
 import Menu from './Menu';
 
-// class AccountMenu extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {};
-//   }
-
-//   render() {
-//     return (
-//       <div
-//         className={`top-icon top-settings exp-dropdown-trigger exp-dropdown-position-left ${this
-//           .state.over && 'over'}`}
-//         onMouseOver={e => this.setState({ over: true })}
-//       >
-//         <i className="os-icon os-icon-ui-46" />
-//         <div className="account-info">
-//           <div className="account-name">Account</div>
-//           <div className="account-hash">123123231</div>
-//         </div>
-//         <div className="exp-dropdown">
-//           <div className="icon-w">
-//             <i className="os-icon os-icon-ui-46" />
-//           </div>
-//           <ul>
-//             <li>
-//               <a href="users_profile_small.html">
-//                 <i className="os-icon os-icon-ui-49" />
-//                 <span>Profile Settings</span>
-//               </a>
-//             </li>
-//             <li>
-//               <a href="users_profile_small.html">
-//                 <i className="os-icon os-icon-grid-10" />
-//                 <span>Billing Info</span>
-//               </a>
-//             </li>
-//             <li>
-//               <a href="users_profile_small.html">
-//                 <i className="os-icon os-icon-ui-44" />
-//                 <span>My Invoices</span>
-//               </a>
-//             </li>
-//             <li>
-//               <a href="users_profile_small.html">
-//                 <i className="os-icon os-icon-ui-15" />
-//                 <span>Cancel Account</span>
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
 const Layout = ({ children, history }) => (
   <div className="all-wrapper solid-bg-all">
     <div className="layout-w">

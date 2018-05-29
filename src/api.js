@@ -1,5 +1,12 @@
 import axios from 'axios';
 import store from 'store';
+import {
+  privateKeyToAddress,
+  getBase58CheckAddressFromPriKeyBase64String,
+  signTransaction,
+} from '@tronprotocol/wallet-api/src/utils/crypto';
+import { buildFreezeBalance } from '@tronprotocol/wallet-api/src/utils/transaction';
+import { base64DecodeFromString } from '@tronprotocol/wallet-api/src/utils/bytes';
 
 const apiInstance = axios.create({
   baseURL: process.env.API_URL || '',
@@ -80,14 +87,32 @@ const API = {
     return data.slice(data.length - 7);
   },
 
-  async saveWallet(wallet) {
-    store.set('wallet', wallet);
-    return true;
+  saveWallet(privateKey) {
+    const address = privateKeyToAddress(privateKey);
+    if (!address) {
+      return alert('Invalid Private Key');
+    }
+    store.set('wallet', { key: privateKey, address });
+    return this.getWallet();
   },
 
-  async getWallet() {
+  getWallet() {
     return store.get('wallet');
   },
+
+  removeWallet() {
+    store.remove('wallet');
+    return true;
+  },
 };
+
+// const t = getBase58CheckAddressFromPriKeyBase64String('27IQVTW4LJEVUM8RWYCS9DU5BPLIMHACHDU');
+// console.log(t);
+// const a = buildFreezeBalance(t, 1000);
+// console.log(a);
+// const com_priKeyBytes = base64DecodeFromString(store.get('wallet').key);
+// console.log(com_priKeyBytes);
+// const s = signTransaction(com_priKeyBytes, a);
+// console.log(s);
 
 export default API;

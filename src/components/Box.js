@@ -51,7 +51,7 @@ Box.propTypes = {
 Box.defaultProps = {
   value: null,
   linkTo: null,
-  valueFontSize: '2.25rem',
+  valueFontSize: '2.15rem',
   styles: {},
 };
 
