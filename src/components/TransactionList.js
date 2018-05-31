@@ -19,10 +19,7 @@ const TransactionList = ({ transactions, title }) => {
             <table className="table table-padded">
               <tbody>
                 {transactions.filter(Boolean).map(t => (
-                  <tr
-                    key={t.hash}
-                    className="transaction-row"
-                  >
+                  <tr key={t.hash} className="transaction-row">
                     <td style={{ width: '20%' }}>
                       <div className="smaller lighter">{formatTime(t.timestamp, 'MMM DD')}</div>
                       <div className="smaller lighter">{formatTime(t.timestamp, 'HH:mm')}</div>
@@ -39,7 +36,7 @@ const TransactionList = ({ transactions, title }) => {
                     <td className="bolder nowrap" style={{ width: '20%' }}>
                       <Link to={`/transactions/${t.hash}`}>
                         <div className="text-success text-sm">{t.amount}</div>
-                        <div className="smaller lighter">TRX</div>
+                        <div className="smaller lighter">{t.asset}</div>
                       </Link>
                     </td>
                   </tr>

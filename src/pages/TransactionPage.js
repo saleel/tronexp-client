@@ -94,7 +94,9 @@ class TransactionPage extends React.PureComponent {
                       <span>Amount</span>
                     </div>
                     <div className="col text-right">
-                      <span>{transaction.amount} TRX</span>
+                      <span>
+                        {transaction.amount} {transaction.asset}
+                      </span>
                     </div>
                   </div>
                   <div className="row block-kv">
