@@ -28,7 +28,9 @@ const AccountList = ({ accounts, title }) => {
                     </td>
                     <td className="bolder" style={{ width: '40%' }}>
                       <Link to={`/accounts/${t.address}`}>
-                        <div className="text-success text-sm">{formatCurrency(t.trxBalance)}</div>
+                        <div className="text-success text-sm">
+                          {formatCurrency(t.trxBalance, 2)}
+                        </div>
                         <div className="smaller lighter">TRX</div>
                       </Link>
                     </td>

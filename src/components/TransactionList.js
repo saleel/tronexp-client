@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Loading from './Loading';
-import { formatTime } from '../utils';
+import { formatTime, formatCurrency } from '../utils';
 
 const TransactionList = ({ transactions, title }) => {
   if (!transactions) {
@@ -35,7 +35,7 @@ const TransactionList = ({ transactions, title }) => {
                     </td>
                     <td className="bolder nowrap" style={{ width: '20%' }}>
                       <Link to={`/transactions/${t.hash}`}>
-                        <div className="text-success text-sm">{t.amount}</div>
+                        <div className="text-success text-sm">{formatCurrency(t.amount, 2)}</div>
                         <div className="smaller lighter">{t.asset}</div>
                       </Link>
                     </td>
