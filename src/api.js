@@ -71,6 +71,13 @@ const API = {
     return response.data;
   },
 
+  async getMarketData(count = 10) {
+    const response = await apiInstance.get('/markets', {
+      params: { limit: count },
+    });
+    return response.data;
+  },
+
   async getTicker() {
     const response = await axios.get('https://api.coinmarketcap.com/v2/ticker/1958/');
     const usd = response.data.data.quotes.USD;
