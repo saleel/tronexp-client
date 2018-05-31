@@ -42,7 +42,7 @@ class TransactionListPage extends React.PureComponent {
     const skip = limit * (page - 1);
 
     const totalPages = Math.ceil(totalTransactions / limit);
-    if (page < 1 || page >= totalPages) {
+    if (page < 1 || page > totalPages) {
       return;
     }
 
