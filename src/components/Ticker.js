@@ -38,15 +38,15 @@ const Ticker = ({ ticker, priceHistory }) => {
         borderJoinStyle: 'miter',
 
         pointBorderColor: '#fff',
-        pointBorderWidth: 3,
+        pointBorderWidth: 2,
         pointBackgroundColor: '#151F40',
-        pointRadius: 5,
+        pointRadius: 4,
         pointHitRadius: 7,
 
         pointHoverBackgroundColor: '#151F40',
         pointHoverBorderColor: '#fff',
-        pointHoverBorderWidth: 3,
-        pointHoverRadius: 7,
+        pointHoverBorderWidth: 2,
+        pointHoverRadius: 6,
 
         scaleShowLabels: false,
 
@@ -83,7 +83,7 @@ const Ticker = ({ ticker, priceHistory }) => {
   };
 
   return (
-    <div className="block-box" style={{ height: '276px' }}>
+    <div className="block-box" style={{ minHeight: '276px' }}>
       <div className="block-widget highlight bold-label  trend-in-corner">
         <div className={ticker.percent24 < 0 ? 'value text-danger' : 'value text-success'}>
           ${ticker.price}

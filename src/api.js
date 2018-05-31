@@ -81,10 +81,10 @@ const API = {
     };
   },
 
-  async getHistoricalPrice() {
-    const response = await axios.get('https://min-api.cryptocompare.com/data/histoday?fsym=TRX&tsym=USD&limit=10&aggregate=1&e=Bitfinex');
+  async getHistoricalPrice(days = 7) {
+    const response = await axios.get(`https://min-api.cryptocompare.com/data/histoday?fsym=TRX&tsym=USD&limit=${days}&aggregate=1&e=Bitfinex`);
     const data = response.data.Data;
-    return data.slice(data.length - 7);
+    return data.slice(data.length - days);
   },
 
   saveWallet(privateKey) {

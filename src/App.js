@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import BlockPage from './pages/BlockPage';
@@ -13,6 +13,7 @@ import AccountsListPage from './pages/AccountsListPage';
 import TokensListPage from './pages/TokensListPage';
 import CreateWalletPage from './pages/CreateWalletPage';
 import WalletPage from './pages/WalletPage';
+import MarketPage from './pages/MarketPage';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -78,6 +79,11 @@ class App extends React.PureComponent {
         name: 'wallet',
         path: '/wallet',
         component: WalletPage,
+      },
+      {
+        name: 'market',
+        path: '/market',
+        component: MarketPage,
       },
     ];
 
