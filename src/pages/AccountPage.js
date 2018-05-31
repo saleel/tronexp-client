@@ -10,6 +10,7 @@ class AccountPage extends React.PureComponent {
 
     this.state = {
       account: {},
+      activeTab: 'balances',
     };
 
     this.getData = this.getData.bind(this);
@@ -33,11 +34,8 @@ class AccountPage extends React.PureComponent {
     });
   }
 
-  isTab(hash, def = false) {
-    if (!window.location.hash) {
-      return def;
-    }
-    return hash === window.location.hash.substr(1);
+  isTab(tabname) {
+    return this.state.activeTab === tabname;
   }
 
   render() {
@@ -97,7 +95,9 @@ class AccountPage extends React.PureComponent {
                 <li className="nav-item">
                   <a
                     className={this.isTab('balances', true) ? 'nav-link active' : 'nav-link'}
-                    href="#balances"
+                    onClick={() => {
+                      this.setState({ activeTab: 'balances' });
+                    }}
                   >
                     Token Balances
                   </a>
@@ -105,7 +105,9 @@ class AccountPage extends React.PureComponent {
                 <li className="nav-item">
                   <a
                     className={this.isTab('transactions') ? 'nav-link active' : 'nav-link'}
-                    href="#transactions"
+                    onClick={() => {
+                      this.setState({ activeTab: 'transactions' });
+                    }}
                   >
                     Transactions
                   </a>
