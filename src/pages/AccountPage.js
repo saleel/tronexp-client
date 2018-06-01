@@ -62,9 +62,12 @@ class AccountPage extends React.PureComponent {
         <div className="block-wrapper">
           <div className="block-box p-0 mb-4">
             <div className="row">
+              <div className="col-12 text-center b-b p-3 shaded-text">
+                Account: {account.address}
+              </div>
               <div className="col-12 col-sm-4 b-r">
                 <div className="block-widget centered padded">
-                  <div className="value xs">{account.name}</div>
+                  <div className="value xs">{account.name || '-'}</div>
                   <div className="label">Name</div>
                 </div>
               </div>
