@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import Tweets from './Tweets';
 import BuyTron from './BuyTron';
 import Menu from './Menu';
+import Search from './Search';
 
-const Layout = ({ children, history }) => (
+const Layout = ({ children, history, routeTo }) => (
   <div className="all-wrapper solid-bg-all">
     <div className="layout-w">
       <div className="menu-mobile menu-activated-on-click color-scheme-dark">
@@ -50,9 +51,7 @@ const Layout = ({ children, history }) => (
       <div className="content-w">
         <div className="top-bar color-scheme-dark">
           <div className="top-menu-controls">
-            <div className="block-search autosuggest-search-activator">
-              <input placeholder="Start typing to search..." type="text" />
-            </div>
+            <Search routeTo={routeTo} />
             <Link to="/wallet/new" className="btn btn-white btn-sm mr-2">
               <i className="os-icon os-icon-mail-18" />
               <span>Create Wallet</span>
