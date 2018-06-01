@@ -10,6 +10,7 @@ class WalletPage extends React.PureComponent {
     this.state = {
       account: null,
       privateKey: '',
+      activeTab: 'balances',
     };
 
     this.qrElement = React.createRef();
@@ -52,11 +53,8 @@ class WalletPage extends React.PureComponent {
     });
   }
 
-  isTab(hash, def = false) {
-    if (!window.location.hash) {
-      return def;
-    }
-    return hash === window.location.hash.substr(1);
+  isTab(tabname) {
+    return this.state.activeTab === tabname;
   }
 
   renderLoginForm() {
@@ -229,7 +227,10 @@ class WalletPage extends React.PureComponent {
             <div className="col-12 col-sm-6">
               <div className="block-box">
                 <h6 className="block-header">Receive</h6>
-                <p>Send TRX (testnet) to the address shown above. You can get the address by scanning the below QR code.</p>
+                <p>
+                  Send TRX (testnet) to the address shown above. You can get the address by scanning
+                  the below QR code.
+                </p>
                 <canvas ref={this.qrElement} />
               </div>
             </div>
@@ -239,7 +240,7 @@ class WalletPage extends React.PureComponent {
                 <h6 className="block-header">Freeze Balance</h6>
                 <p>Freeze your balance to vote for Super Representative.</p>
                 {/* <p>Tron Power: 0, Bandwidth: 0</p> */}
-                
+
                 <div className="form-group row">
                   <label className="col-form-label col-sm-4" htmlFor="amountFreeze">
                     Amount to Freeze
@@ -263,7 +264,6 @@ class WalletPage extends React.PureComponent {
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -271,7 +271,7 @@ class WalletPage extends React.PureComponent {
               <div className="block-box">
                 <h6 className="block-header">Apply to be a Super Representative</h6>
                 <p>This involves a fee of 9,999 TRX.</p>
-                
+
                 <div className="form-group row">
                   <label className="col-form-label col-sm-4" htmlFor="srUrl">
                     Website Url
@@ -295,7 +295,6 @@ class WalletPage extends React.PureComponent {
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -306,7 +305,9 @@ class WalletPage extends React.PureComponent {
                 <li className="nav-item">
                   <a
                     className={this.isTab('balances', true) ? 'nav-link active' : 'nav-link'}
-                    href="#balances"
+                    onClick={() => {
+                      this.setState({ activeTab: 'balances' });
+                    }}
                   >
                     Token Balances
                   </a>
@@ -314,7 +315,9 @@ class WalletPage extends React.PureComponent {
                 <li className="nav-item">
                   <a
                     className={this.isTab('transactions') ? 'nav-link active' : 'nav-link'}
-                    href="#transactions"
+                    onClick={() => {
+                      this.setState({ activeTab: 'transactions' });
+                    }}
                   >
                     Transactions
                   </a>
