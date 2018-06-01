@@ -61,7 +61,7 @@ class MarketPage extends React.PureComponent {
                       </thead>
                       <tbody>
                         {markets.map(m => (
-                          <tr>
+                          <tr key={m.exchange}>
                             <td>{m.exchange}</td>
                             <td className="text-center">{m.price}</td>
                             <td className="text-center">{m.volume24}</td>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Datamap from 'datamaps';
 import api from '../api';
+import { Loading } from '../components';
 
 class NodesListPage extends React.PureComponent {
   constructor(props) {
@@ -8,6 +9,7 @@ class NodesListPage extends React.PureComponent {
 
     this.state = {
       countries: [],
+      nodes: null,
     };
   }
 
@@ -44,7 +46,7 @@ class NodesListPage extends React.PureComponent {
     countries = countries.sort((a, b) => b.count - a.count);
     cities = cities.sort((a, b) => b.count - a.count);
 
-    this.setState({ countries });
+    this.setState({ nodes, countries });
 
     const map = new Datamap({
       element: this.mapContainer,
@@ -71,7 +73,7 @@ class NodesListPage extends React.PureComponent {
   }
 
   render() {
-    const { countries } = this.state;
+    const { countries, nodes } = this.state;
 
     return (
       <div className="content-box">
@@ -88,7 +90,7 @@ class NodesListPage extends React.PureComponent {
               </div>
             </div>
           </div>
-          <div className="col-sm-12">
+          <div className="col-sm-12 mb-4">
             <div className="row">
               {countries.map(c => (
                 <div key={c.country} className="col">
@@ -101,6 +103,37 @@ class NodesListPage extends React.PureComponent {
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="col-12">
+            {!nodes ? (
+              <Loading />
+            ) : (
+              <div className="block-wrapper">
+                <div className="block-box">
+                  <div className="table-responsive">
+                    <table className="table table-lightborder">
+                      <thead>
+                        <tr>
+                          <th>Address</th>
+                          <th className="text-center">City</th>
+                          <th className="text-right">Country</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {nodes.map((m, i) => (
+                          <tr key={(m.address + i)}>
+                            <td>{m.address}</td>
+                            <td className="text-center">{m.city}</td>
+                            <td className="text-right">{m.country}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
