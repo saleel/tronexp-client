@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "TRON Blockchain Explorer",
   "scripts": {
-    "dev": "NODE_ENV=development API_URL=http://localhost:3000 ./node_modules/parcel-bundler/bin/cli.js -p 3001 ./src/index.html",
-    "build": "rm -rf dist && npm install && API_URL=http://localhost:3000 NODE_ENV=production ./node_modules/parcel-bundler/bin/cli.js build ./src/index.html --out-dir ./dist --public-url /",
-    "start": "(cd ./dist && http-server -p 3001 .)"
+    "dev":
+      "NODE_ENV=development API_URL=http://localhost:3000 ./node_modules/parcel-bundler/bin/cli.js -p 3001 ./src/index.html",
+    "build":
+      "rm -rf dist && npm install && API_URL=http://localhost:3000 NODE_ENV=production ./node_modules/parcel-bundler/bin/cli.js build ./src/index.html --out-dir ./dist --public-url /",
+    "start": "(cd ./dist && http-server -p 80 .)"
   },
   "dependencies": {
     "@tronprotocol/wallet-api": "0.0.35",
