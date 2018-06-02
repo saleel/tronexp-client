@@ -6,7 +6,7 @@
     "dev":
       "NODE_ENV=development API_URL=http://localhost:3000 ./node_modules/parcel-bundler/bin/cli.js -p 3001 ./src/index.html",
     "build":
-      "rm -rf dist && npm install && API_URL=http://localhost:3000 NODE_ENV=production ./node_modules/parcel-bundler/bin/cli.js build ./src/index.html --out-dir ./dist --public-url /",
+      "rm -rf dist && npm install && API_URL=http://tronexp.com:3000 NODE_ENV=production ./node_modules/parcel-bundler/bin/cli.js build ./src/index.html --out-dir ./dist --public-url /",
     "start": "(cd ./dist && http-server -p 80 .)"
   },
   "dependencies": {
