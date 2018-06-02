@@ -3,10 +3,17 @@
   margin: 0 auto;
 }
 
-.transaction-row {
+.transaction-row,
+.account-row {
   a {
     color: inherit !important;
     text-decoration: none !important;
+  }
+}
+
+.transaction-row {
+  td {
+    padding: 0.75rem 0.6rem !important;
   }
 }
 
@@ -27,97 +34,6 @@
 
     .highlight-header {
       background-color: #2283ff;
-    }
-  }
-
-  .os-tabs-controls {
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: space-between;
-    .nav-pills {
-      align-items: center;
-      border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
-    }
-    .nav-tabs {
-      flex: 1;
-    }
-    &.os-tabs-complex {
-      .nav-tabs {
-        align-items: stretch;
-      }
-      .nav-item {
-        white-space: nowrap;
-        margin-right: 0px;
-        &.nav-actions {
-          margin-left: auto;
-        }
-        .btn {
-          margin-left: 10px;
-        }
-        .nav-link {
-          color: $body-color;
-          opacity: 0.6;
-          border-right: 1px solid rgba(0, 0, 0, 0.05);
-          border-radius: 0px;
-          padding: 8px 20px;
-          margin-right: 0px;
-          span {
-            display: inline-block;
-            vertical-align: middle;
-            font-size: $font-size-base;
-          }
-          span.badge {
-            font-size: $font-size-base * 0.8;
-            padding: 3px 5px;
-            span {
-              font-size: $font-size-base * 0.8;
-            }
-          }
-          &.active {
-            opacity: 1;
-            .tab-label {
-              font-size: $font-size-base * 1.4;
-              line-height: 1.25;
-            }
-          }
-          .tab-label {
-            display: inline-block;
-            margin-right: 10px;
-            text-transform: none;
-            letter-spacing: normal;
-            font-size: $font-size-base * 1.2;
-            vertical-align: middle;
-            transition: all 0.2s ease;
-          }
-          .tab-value {
-            display: inline-block;
-            color: $primary;
-            margin-right: 10px;
-            text-transform: none;
-            letter-spacing: normal;
-            vertical-align: middle;
-          }
-          .badge {
-            display: inline-block;
-            vertical-align: middle;
-            font-size: $font-size-base * 0.8;
-            letter-spacing: normal;
-            i.os-icon {
-              color: #fff;
-              font-size: 12px;
-              display: inline-block;
-              vertical-align: middle;
-              margin-bottom: 0px;
-              margin-right: 3px;
-            }
-            span {
-              display: inline-block;
-              vertical-align: middle;
-              font-size: $font-size-base * 0.8;
-            }
-          }
-        }
-      }
     }
   }
 
@@ -203,6 +119,106 @@
       span {
         display: inline-block;
         vertical-align: middle;
+      }
+    }
+  }
+}
+
+.tabs-controls {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  .nav-pills {
+    align-items: center;
+    border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+  }
+  .nav-tabs {
+    flex: 1;
+  }
+  .nav-item .nav-link {
+    background: none !important;
+    cursor: pointer;
+
+    &.active,
+    &:focus {
+      outline-width: 0;
+    }
+  }
+  &.tabs-complex {
+    .nav-tabs {
+      align-items: stretch;
+    }
+    .nav-item {
+      white-space: nowrap;
+      margin-right: 0px;
+      &.nav-actions {
+        margin-left: auto;
+      }
+      .btn {
+        margin-left: 10px;
+      }
+      .nav-link {
+        color: $body-color;
+        opacity: 0.6;
+        border-right: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 0px;
+        padding: 8px 20px;
+        margin-right: 0px;
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: $font-size-base;
+        }
+        span.badge {
+          font-size: $font-size-base * 0.8;
+          padding: 3px 5px;
+          span {
+            font-size: $font-size-base * 0.8;
+          }
+        }
+        &.active {
+          opacity: 1;
+          .tab-label {
+            font-size: $font-size-base * 1.4;
+            line-height: 1.25;
+          }
+        }
+        .tab-label {
+          display: inline-block;
+          margin-right: 10px;
+          text-transform: none;
+          letter-spacing: normal;
+          font-size: $font-size-base * 1.2;
+          vertical-align: middle;
+          transition: all 0.2s ease;
+        }
+        .tab-value {
+          display: inline-block;
+          color: $primary;
+          margin-right: 10px;
+          text-transform: none;
+          letter-spacing: normal;
+          vertical-align: middle;
+        }
+        .badge {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: $font-size-base * 0.8;
+          letter-spacing: normal;
+          i.os-icon {
+            color: #fff;
+            font-size: 12px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-bottom: 0px;
+            margin-right: 3px;
+          }
+          span {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: $font-size-base * 0.8;
+          }
+        }
       }
     }
   }

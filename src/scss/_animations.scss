@@ -46,6 +46,31 @@
   }
 }
 
+@keyframes createBox {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animation-appear {
+  animation: createBox 0.25s;
+}
+
+.animation-fade-right {
+  animation: fadeRight 0.25s;
+}
+
+.animation-fade-left {
+  animation: fadeLeft 0.25s;
+}
+
+.animation-fade-up {
+  animation: fadeUp 0.25s;
+}
+
 .floated-chat-btn {
   animation-name: jumpUp;
   animation-duration: 0.5s;
@@ -65,10 +90,10 @@
   animation-fill-mode: both;
 }
 
-.block-box {
-  animation-name: fadeUp;
-  animation-duration: 1s;
-}
+// .block-box {
+//   animation-name: fadeUp;
+//   animation-duration: 0.5s;
+// }
 
 .pipeline {
   animation-name: fadeUp;

@@ -17,7 +17,7 @@ class Dashboard extends React.PureComponent {
   }
 
   async componentDidMount() {
-    api.getBlocks(8).then((response) => {
+    api.getBlocks({ limit: 8 }).then((response) => {
       const blocks = response.data;
       this.setState({
         blocks,

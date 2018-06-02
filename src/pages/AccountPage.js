@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TransactionList, Loading } from '../components';
+import { Link } from 'react-router-dom';
+import { TransactionList, Loading, BlockList } from '../components';
 import api from '../api';
 import { formatTime } from '../utils';
 
@@ -9,6 +10,7 @@ class AccountPage extends React.PureComponent {
     super(props);
 
     this.state = {
+      isLoading: true,
       account: {},
       activeTab: 'balances',
     };
@@ -26,10 +28,24 @@ class AccountPage extends React.PureComponent {
     this.getData(address);
   }
 
-  getData(address) {
-    api.getAccount(address).then((account) => {
+  async getData(address) {
+    this.setState({
+      isLoading: true,
+    });
+
+    const account = await api.getAccount(address);
+    this.setState({
+      account,
+      isLoading: false,
+    });
+
+    api.getBlocks({ witness: address, limit: 50 }).then((response) => {
       this.setState({
-        account,
+        account: {
+          ...this.state.account,
+          blocks: response.data,
+          totalBlocks: response.total,
+        },
       });
     });
   }
@@ -39,22 +55,14 @@ class AccountPage extends React.PureComponent {
   }
 
   render() {
-    const { account } = this.state;
+    const { isLoading, account } = this.state;
 
-    if (!account || !account.address) {
+    if (isLoading) {
       return (
         <div className="content-box">
           <Loading />
         </div>
       );
-    }
-
-    let set1;
-    let set2;
-    const { transactions } = account;
-    if (transactions && transactions.length > 0) {
-      set1 = transactions.slice(0, transactions.length / 2);
-      set2 = transactions.slice(transactions.length / 2, transactions.length);
     }
 
     return (
@@ -79,6 +87,12 @@ class AccountPage extends React.PureComponent {
               </div>
               <div className="col-12 col-sm-4 b-r">
                 <div className="block-widget centered padded">
+                  <div className="value xs">{account.bandwidth}</div>
+                  <div className="label">Tron Power</div>
+                </div>
+              </div>
+              {/* <div className="col-12 col-sm-3 b-r">
+                <div className="block-widget centered padded">
                   <div className="value sm">
                     <span className="icon-up red" />
                     <span>{account.fromTransCount}</span>
@@ -86,40 +100,60 @@ class AccountPage extends React.PureComponent {
                     <span className="icon-down green ml-3" />
                     <span>{account.toTransCount}</span>
                   </div>
-                  <div className="label">Transactions</div>
+                  <div className="label">Transfers</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
-          <div className="os-tabs-w">
-            <div className="os-tabs-controls">
+          <div className="tabs-w">
+            <div className="tabs-controls">
               <ul className="nav nav-tabs bigger">
                 <li className="nav-item">
-                  <a
+                  <button
                     className={this.isTab('balances', true) ? 'nav-link active' : 'nav-link'}
                     onClick={() => {
                       this.setState({ activeTab: 'balances' });
                     }}
                   >
                     Token Balances
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item">
-                  <a
-                    className={this.isTab('transactions') ? 'nav-link active' : 'nav-link'}
+                  <button
+                    className={this.isTab('transfers') ? 'nav-link active' : 'nav-link'}
                     onClick={() => {
-                      this.setState({ activeTab: 'transactions' });
+                      this.setState({ activeTab: 'transfers' });
                     }}
                   >
-                    Transactions
-                  </a>
+                    Transfers
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={this.isTab('votes') ? 'nav-link active' : 'nav-link'}
+                    onClick={() => {
+                      this.setState({ activeTab: 'votes' });
+                    }}
+                  >
+                    Votes Given
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={this.isTab('blocks') ? 'nav-link active' : 'nav-link'}
+                    onClick={() => {
+                      this.setState({ activeTab: 'blocks' });
+                    }}
+                  >
+                    Blocks Produced
+                  </button>
                 </li>
               </ul>
             </div>
             <div className="tab-content pt-3">
               {this.isTab('balances', true) && (
-                <div className="block-box">
+                <div className="block-box animation-fade-up">
                   {account.tokenBalances.length > 0 ? (
                     <div className="table-responsive">
                       <table className="table table-lightborder">
@@ -144,25 +178,74 @@ class AccountPage extends React.PureComponent {
                   )}
                 </div>
               )}
-              {this.isTab('transactions') &&
-                (transactions ? (
-                  transactions.length ? (
-                    <div className="row">
-                      <div className="col-12 col-lg-6">
-                        <TransactionList transactions={set1} />
-                      </div>
-                      <div className="col-12 col-lg-6">
-                        <TransactionList transactions={set2} />
-                      </div>
+              {this.isTab('transfers') && (
+                <div className="row">
+                  <div className="col-12 col-lg-6">
+                    <h6>
+                      <span className="icon-up red" />
+                      <span>Transfers From ({account.fromTransfers.length})</span>
+                    </h6>
+                    <TransactionList transactions={account.fromTransfers} />
+                  </div>
+                  <div className="col-12 col-lg-6">
+                    <h6>
+                      <span className="icon-down green" />
+                      <span>Transfers To ({account.toTransfers.length})</span>
+                    </h6>
+                    <TransactionList transactions={account.toTransfers} />
+                  </div>
+                </div>
+              )}
+              {this.isTab('votes') && (
+                <div className="row">
+                  <div className="col-12">
+                    <div className="block-box animation-fade-up">
+                      {account.votes.length ? (
+                        <div className="table-responsive">
+                          <table className="table table-lightborder">
+                            <thead>
+                              <tr>
+                                <th style={{ width: '5%' }}>#</th>
+                                <th style={{ width: '60%' }}>Address</th>
+                                <th style={{ width: '35%' }}>Votes</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {account.votes.map((v, i) => (
+                                <tr key={v.address}>
+                                  <td>{i + 1}</td>
+                                  <td>
+                                    <Link
+                                      to={`/accounts/${v.address}`}
+                                      style={{ color: 'inherit' }}
+                                    >
+                                      {v.address}
+                                    </Link>
+                                  </td>
+                                  <td>{v.votes}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      ) : (
+                        <div>No Votes Given</div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="block-box">
-                      <p className="m-0">No transactions found</p>
-                    </div>
-                  )
-                ) : (
-                  <Loading />
-                ))}
+                  </div>
+                </div>
+              )}
+              {this.isTab('blocks') && (
+                <div className="row">
+                  <div className="col-12">
+                    <BlockList blocks={account.blocks} />
+                    {account.blocks &&
+                      account.blocks.length >= 50 && (
+                        <p>Note: Showing most recent 50 of {account.totalBlocks} blocks only</p>
+                      )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

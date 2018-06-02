@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { TransactionList, Loading } from '../components';
 import api from '../api';
 import { formatTime } from '../utils';
@@ -99,7 +100,9 @@ class BlockPage extends React.PureComponent {
                       <span>Witness</span>
                     </div>
                     <div className="col text-right">
-                      <span className="hash">{block.witnessAddress}</span>
+                      <Link to={`/accounts/${block.witnessAddress}`}>
+                        <span className="hash">{block.witnessAddress}</span>
+                      </Link>
                     </div>
                   </div>
                   <div className="row block-kv">

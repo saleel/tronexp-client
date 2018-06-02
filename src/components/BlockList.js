@@ -16,11 +16,11 @@ const BlockList = ({ blocks, title }) => {
   }
 
   return (
-    <div className="block-list">
-      <div className="block-wrapper">
-        {title && <h6 className="block-header">{title}</h6>}
-        <div className="row pt-1">
-          {blocks.filter(Boolean).map(b => (
+    <div className="block-list animation-fade-up mb-3">
+      {title && <h6 className="block-header">{title}</h6>}
+      {blocks.length > 0 ? (
+        blocks.filter(Boolean).map(b => (
+          <div className="row pt-1">
             <div className="col m-0 pb-3 pl-2 pr-2" key={b.number}>
               <Link
                 to={`/blocks/${b.number}`}
@@ -47,9 +47,11 @@ const BlockList = ({ blocks, title }) => {
                 </div>
               </Link>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        ))
+      ) : (
+        <div className="block-box">No Blocks</div>
+      )}
     </div>
   );
 };

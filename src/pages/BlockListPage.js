@@ -28,7 +28,7 @@ class BlockListPage extends React.PureComponent {
       fetching: true,
     });
 
-    return api.getBlocks(limit, skip).then((response) => {
+    return api.getBlocks({ limit, skip }).then((response) => {
       this.setState({
         blocks: response.data,
         totalBlocks: response.total,

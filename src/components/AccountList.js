@@ -19,7 +19,7 @@ const AccountList = ({ accounts, title }) => {
             <table className="table table-padded">
               <tbody>
                 {accounts.filter(Boolean).map(t => (
-                  <tr key={t.address} className="transaction-row">
+                  <tr key={t.address} className="account-row">
                     <td style={{ width: '60%' }}>
                       <Link to={`/accounts/${t.address}`}>
                         {/* <span className="icon-circle green" /> */}

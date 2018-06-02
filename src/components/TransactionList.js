@@ -14,17 +14,17 @@ const TransactionList = ({ transactions, title }) => {
       {title && <h6 className="block-header">{title}</h6>}
 
       <div className="block-box-tp">
-        {transactions.length ? (
-          <div className="table-responsive">
-            <table className="table table-padded">
-              <tbody>
-                {transactions.filter(Boolean).map(t => (
+        <div className="table-responsive">
+          <table className="table table-padded animation-fade-up">
+            <tbody>
+              {transactions.length ? (
+                transactions.filter(Boolean).map(t => (
                   <tr key={t.hash} className="transaction-row">
-                    <td style={{ width: '20%' }}>
+                    <td style={{ width: '15%' }}>
                       <div className="smaller lighter">{formatTime(t.timestamp, 'MMM DD')}</div>
                       <div className="smaller lighter">{formatTime(t.timestamp, 'HH:mm')}</div>
                     </td>
-                    <td className="nowrap" style={{ width: '60%' }}>
+                    <td style={{ width: '65%' }}>
                       <Link to={`/transactions/${t.hash}`}>
                         <span className="icon-circle smaller red" />
                         <span className="text-xs">{t.from}</span>
@@ -33,20 +33,22 @@ const TransactionList = ({ transactions, title }) => {
                         <span className="text-xs">{t.to}</span>
                       </Link>
                     </td>
-                    <td className="bolder nowrap" style={{ width: '20%' }}>
+                    <td className="bolder" style={{ width: '20%' }}>
                       <Link to={`/transactions/${t.hash}`}>
                         <div className="text-success text-sm">{formatCurrency(t.amount, 2)}</div>
                         <div className="smaller lighter">{t.asset}</div>
                       </Link>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div>No Transactions</div>
-        )}
+                ))
+              ) : (
+                <tr>
+                  <td>No Transactions</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

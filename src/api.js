@@ -14,9 +14,9 @@ const apiInstance = axios.create({
 });
 
 const API = {
-  async getBlocks(limit = 20, skip = 0) {
+  async getBlocks(params = { limit: 20, skip: 0 }) {
     const response = await apiInstance.get('/blocks', {
-      params: { limit, skip },
+      params,
     });
     return response.data;
   },

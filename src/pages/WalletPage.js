@@ -299,8 +299,8 @@ class WalletPage extends React.PureComponent {
             </div>
           </div>
 
-          <div className="os-tabs-w">
-            <div className="os-tabs-controls">
+          <div className="tabs-w">
+            <div className="tabs-controls">
               <ul className="nav nav-tabs bigger">
                 <li className="nav-item">
                   <a
