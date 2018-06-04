@@ -34,6 +34,10 @@ class TransactionPage extends React.PureComponent {
     });
   }
 
+  formatDataKey(k = '') {
+    return k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase());
+  }
+
   render() {
     const { transaction } = this.state;
 
@@ -53,13 +57,12 @@ class TransactionPage extends React.PureComponent {
               <div className="block-box">
                 <div className="padded-sm m-b">
                   <div className="centered-header">
-                    <h6>{formatTime(transaction.timestamp)}</h6>
+                    <h6>{transaction.contractType}</h6>
                   </div>
                   <div className="row">
                     <div className="col-12 b-b">
-                      <div className="block-widget centered padded-v-big highlight bigger">
-                        <div className="label">Amount</div>
-                        <div className="value">{transaction.amount}</div>
+                      <div className="block-widget centered pb-3 highlight bigger">
+                        <div className="label">{formatTime(transaction.timestamp)}</div>
                       </div>
                     </div>
                   </div>
@@ -75,38 +78,36 @@ class TransactionPage extends React.PureComponent {
                   </div>
                   <div className="row block-kv">
                     <div className="col">
-                      <span>From</span>
+                      <span>Contract Type</span>
                     </div>
                     <div className="col text-right">
-                      <span className="hash">{transaction.from}</span>
+                      <span>{transaction.contractType}</span>
                     </div>
                   </div>
                   <div className="row block-kv">
                     <div className="col">
-                      <span>To</span>
+                      <span>Owner Address</span>
                     </div>
                     <div className="col text-right">
-                      <span className="hash">{transaction.to}</span>
+                      <span className="hash">{transaction.owner}</span>
                     </div>
                   </div>
-                  <div className="row block-kv">
-                    <div className="col">
-                      <span>Amount</span>
+                  {Object.keys(transaction.data).map(k => (
+                    <div key={k} className="row block-kv">
+                      <div className="col">
+                        <span>{this.formatDataKey(k)}</span>
+                      </div>
+                      <div className="col text-right">
+                        <span
+                          className={
+                            transaction.data[k].length === 34 ? 'hash' : ''
+                          }
+                        >
+                          {transaction.data[k]}
+                        </span>
+                      </div>
                     </div>
-                    <div className="col text-right">
-                      <span>
-                        {transaction.amount} {transaction.asset}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="row block-kv">
-                    <div className="col">
-                      <span>Timestamp</span>
-                    </div>
-                    <div className="col text-right">
-                      <span>{formatTime(transaction.timestamp)}</span>
-                    </div>
-                  </div>
+                  ))}
                   <div className="row block-kv">
                     <div className="col">
                       <span>Block Number</span>
@@ -115,6 +116,14 @@ class TransactionPage extends React.PureComponent {
                       <Link to={`/blocks/${transaction.blockNumber}`}>
                         <span>{transaction.blockNumber}</span>
                       </Link>
+                    </div>
+                  </div>
+                  <div className="row block-kv">
+                    <div className="col">
+                      <span>Timestamp</span>
+                    </div>
+                    <div className="col text-right">
+                      <span>{formatTime(transaction.timestamp)}</span>
                     </div>
                   </div>
                 </div>

@@ -17,41 +17,47 @@ const BlockList = ({ blocks, title }) => {
 
   return (
     <div className="block-list animation-fade-up mb-3">
-      {title && <h6 className="block-header">{title}</h6>}
-      {blocks.length > 0 ? (
-        blocks.filter(Boolean).map(b => (
+      <div className="block-wrapper">
+        {title && <h6 className="block-header">{title}</h6>}
+        {blocks.length > 0 ? (
           <div className="row pt-1">
-            <div className="col m-0 pb-3 pl-2 pr-2" key={b.number}>
-              <Link
-                to={`/blocks/${b.number}`}
-                className="block-container"
-                style={{ minWidth: '300px' }}
-              >
-                <div className="recent-block-head">
-                  <div className="badge badge-primary-inverted">{formatTime(b.timestamp)}</div>
-                </div>
-                <div className="recent-block-body">
-                  <div className="recent-block-content">
-                    <h6 className="recent-block-height">#{b.number}</h6>
-                    <div className="recent-block-desc">
-                      <span>WITNESS: </span>
-                      <span>{b.witnessAddress && b.witnessAddress.toString()}</span>
+            {blocks.filter(Boolean).map(b => (
+              <div className="col m-0 pb-3 pl-2 pr-2" key={b.number}>
+                <Link
+                  to={`/blocks/${b.number}`}
+                  className="block-container"
+                  style={{ minWidth: '300px' }}
+                >
+                  <div className="recent-block-head">
+                    <div className="badge badge-primary-inverted">
+                      {formatTime(b.timestamp)}
                     </div>
                   </div>
-                </div>
-                <div className="recent-block-footer">
-                  <span className="value">TRANSACTIONS</span>
-                  <span className="label">{b.transactionsCount}</span>
-                  <span className="value">SIZE</span>
-                  <span className="label">{b.size}</span>
-                </div>
-              </Link>
-            </div>
+                  <div className="recent-block-body">
+                    <div className="recent-block-content">
+                      <h6 className="recent-block-height">#{b.number}</h6>
+                      <div className="recent-block-desc">
+                        <span>WITNESS: </span>
+                        <span>
+                          {b.witnessAddress && b.witnessAddress.toString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="recent-block-footer">
+                    <span className="value">TRANSACTIONS</span>
+                    <span className="label">{b.transactionsCount}</span>
+                    <span className="value">SIZE</span>
+                    <span className="label">{b.size}</span>
+                  </div>
+                </Link>
+              </div>
+            ))}
           </div>
-        ))
-      ) : (
-        <div className="block-box">No Blocks</div>
-      )}
+        ) : (
+          <div className="block-box">No Blocks</div>
+        )}
+      </div>
     </div>
   );
 };

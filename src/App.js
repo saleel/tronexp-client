@@ -6,7 +6,7 @@ import BlockPage from './pages/BlockPage';
 import AccountPage from './pages/AccountPage';
 import TransactionPage from './pages/TransactionPage';
 import BlockListPage from './pages/BlockListPage';
-import TransactionListPage from './pages/TransactionListPage';
+import TransferListPage from './pages/TransferListPage';
 import WitnessesListPage from './pages/WitnessesListPage';
 import NodesListPage from './pages/NodesListPage';
 import AccountsListPage from './pages/AccountsListPage';
@@ -14,6 +14,7 @@ import TokensListPage from './pages/TokensListPage';
 import CreateWalletPage from './pages/CreateWalletPage';
 import WalletPage from './pages/WalletPage';
 import MarketPage from './pages/MarketPage';
+import TransactionListPage from './pages/TransactionListPage';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -34,6 +35,11 @@ class App extends React.PureComponent {
         name: 'block',
         path: '/blocks/:blockNumber',
         component: BlockPage,
+      },
+      {
+        name: 'transferList',
+        path: '/transfers',
+        component: TransferListPage,
       },
       {
         name: 'transactionList',

@@ -28,7 +28,7 @@ class TransactionListPage extends React.PureComponent {
       fetching: true,
     });
 
-    return api.getTransactions(limit, skip).then((response) => {
+    return api.getTransactions({ limit, skip }).then((response) => {
       this.setState({
         transactions: response.data,
         totalTransactions: response.total,
@@ -69,21 +69,13 @@ class TransactionListPage extends React.PureComponent {
         pagesToRender.push(currentPage + i);
       }
     }
-
     pagesToRender = pagesToRender.sort((a, b) => a - b);
-
-    let set1;
-    let set2;
-    if (transactions && transactions.length > 0) {
-      set1 = transactions.slice(0, transactions.length / 2);
-      set2 = transactions.slice(transactions.length / 2, transactions.length);
-    }
 
     return (
       <div className="content-box">
         {pagesToRender.length > 0 && (
           <div className="row">
-            <div className="col">
+            <div className="col-12 pl-1 pr-1">
               <div className="block-box p-1">
                 <div className="row">
                   <div className="col-sm-12 col-md-5">
@@ -136,11 +128,8 @@ class TransactionListPage extends React.PureComponent {
             <Loading />
           ) : (
             <React.Fragment>
-              <div className="col-12 col-lg-6">
-                <TransactionList transactions={set1} />
-              </div>
-              <div className="col-12 col-lg-6">
-                <TransactionList transactions={set2} />
+              <div className="col-12">
+                <TransactionList transactions={transactions} />
               </div>
             </React.Fragment>
           )}

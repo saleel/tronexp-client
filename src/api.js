@@ -21,9 +21,21 @@ const API = {
     return response.data;
   },
 
-  async getTransactions(limit = 20, skip = 0) {
+  async getTransactions(params = { limit: 20, skip: 0 }) {
     const response = await apiInstance.get('/transactions', {
-      params: { limit, skip },
+      params: {
+        ...params,
+      },
+    });
+    return response.data;
+  },
+
+  async getTransfers(params = { limit: 20, skip: 0 }) {
+    const response = await apiInstance.get('/transactions', {
+      params: {
+        ...params,
+        contractType: ['TRANSFERASSETCONTRACT', 'TRANSFERCONTRACT'],
+      },
     });
     return response.data;
   },

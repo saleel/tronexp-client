@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TransactionList, Loading } from '../components';
+import { TransferList, TransactionList, Loading } from '../components';
 import api from '../api';
-import { formatTime } from '../utils';
+import { formatTime, isTransactionTransfer } from '../utils';
 
 class BlockPage extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
+      isLoading: true,
       block: {},
+      activeTab: 'transfers',
     };
 
     this.getData = this.getData.bind(this);
@@ -26,18 +28,38 @@ class BlockPage extends React.PureComponent {
     this.getData(blockNumber);
   }
 
-  getData(blockNumber) {
+  async getData(blockNumber) {
     api.getBlock(blockNumber).then((block) => {
       this.setState({
         block,
+        isLoading: false,
       });
+    });
+
+    const transfersRes = await api.getTransactions({
+      block: blockNumber,
+      limit: 1000,
+    });
+    const transactions = transfersRes.data;
+    const transfers = transactions.filter(d => isTransactionTransfer(d));
+
+    this.setState({
+      block: {
+        ...this.state.block,
+        transactions,
+        transfers,
+      },
     });
   }
 
-  render() {
-    const { block } = this.state;
+  isTab(tabname) {
+    return this.state.activeTab === tabname;
+  }
 
-    if (!block || !block.hash) {
+  render() {
+    const { block, isLoading } = this.state;
+
+    if (isLoading || !block || !block.hash) {
       return (
         <div className="content-box">
           <Loading />
@@ -47,8 +69,8 @@ class BlockPage extends React.PureComponent {
 
     return (
       <div className="content-box">
-        <div className="row">
-          <div className="col-lg-6">
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-8">
             <div className="block-wrapper">
               <div className="block-box">
                 <div className="padded-sm m-b">
@@ -125,9 +147,55 @@ class BlockPage extends React.PureComponent {
               </div>
             </div>
           </div>
-
-          <div className="col-lg-6">
-            <TransactionList transactions={block.transactions} title="Transactions" />
+          <div className="col-12">
+            <div className="tabs-w">
+              <div className="tabs-controls">
+                <ul className="nav nav-tabs bigger">
+                  <li className="nav-item">
+                    <button
+                      className={
+                        this.isTab('transfers') ? 'nav-link active' : 'nav-link'
+                      }
+                      onClick={() => {
+                        this.setState({ activeTab: 'transfers' });
+                      }}
+                    >
+                      Transfers
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={
+                        this.isTab('transactions')
+                          ? 'nav-link active'
+                          : 'nav-link'
+                      }
+                      onClick={() => {
+                        this.setState({ activeTab: 'transactions' });
+                      }}
+                    >
+                      Transactions
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div className="tab-content pt-3">
+                {this.isTab('transfers') && (
+                  <div className="row">
+                    <div className="col-12">
+                      <TransferList transfers={block.transfers} />
+                    </div>
+                  </div>
+                )}
+                {this.isTab('transactions') && (
+                  <div className="row">
+                    <div className="col-12">
+                      <TransactionList transactions={block.transactions} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

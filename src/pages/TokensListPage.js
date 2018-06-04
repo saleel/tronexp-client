@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../api';
+import { Loading } from '../components';
 import { formatTime } from '../utils';
 
 class TokensListPage extends React.PureComponent {
@@ -42,6 +43,14 @@ class TokensListPage extends React.PureComponent {
 
   render() {
     const { tokens } = this.state;
+
+    if (!tokens || !tokens.length) {
+      return (
+        <div className="content-box">
+          <Loading />
+        </div>
+      );
+    }
 
     return (
       <div className="content-box">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ticker, BlockList, TransactionList, Box } from '../components';
+import { Ticker, BlockList, TransferList, Box } from '../components';
 import api from '../api';
 
 class Dashboard extends React.PureComponent {
@@ -8,7 +8,7 @@ class Dashboard extends React.PureComponent {
 
     this.state = {
       blocks: null,
-      transactions: null,
+      transfers: null,
       ticker: {},
       latestBlockNumber: null,
       witnessesCount: null,
@@ -25,10 +25,10 @@ class Dashboard extends React.PureComponent {
       });
     });
 
-    api.getTransactions(18).then((response) => {
+    api.getTransfers({ limit: 18 }).then((response) => {
       this.setState({
-        transactions: response.data,
-        totalTransactions: response.total,
+        transfers: response.data,
+        totalTransfers: response.total,
       });
     });
 
@@ -61,12 +61,12 @@ class Dashboard extends React.PureComponent {
     const {
       latestBlockNumber,
       blocks,
-      transactions,
+      transfers,
       ticker,
       priceHistory,
       witnessesCount,
       accountCount,
-      totalTransactions,
+      totalTransfers,
     } = this.state;
 
     return (
@@ -103,9 +103,9 @@ class Dashboard extends React.PureComponent {
               <div className="col-sm-6">
                 <Box
                   styles={{ height: '130px' }}
-                  linkTo="/transactions"
-                  value={totalTransactions}
-                  label="Transactions"
+                  linkTo="/transfers"
+                  value={totalTransfers}
+                  label="Transfers"
                 />
               </div>
             </div>
@@ -120,7 +120,7 @@ class Dashboard extends React.PureComponent {
             <BlockList blocks={blocks} title="Recent Blocks" />
           </div>
           <div className="col-lg-7">
-            <TransactionList transactions={transactions} title="Recent Transactions" />
+            <TransferList transfers={transfers} title="Recent Transfers" />
           </div>
         </div>
       </div>

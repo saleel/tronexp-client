@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TransactionList, Loading, BlockList } from '../components';
+import { TransferList, Loading, BlockList, TransactionList } from '../components';
 import api from '../api';
-import { formatTime } from '../utils';
+import { formatTime, isTransactionTransfer } from '../utils';
 
 class AccountPage extends React.PureComponent {
   constructor(props) {
@@ -39,14 +39,26 @@ class AccountPage extends React.PureComponent {
       isLoading: false,
     });
 
-    api.getBlocks({ witness: address, limit: 50 }).then((response) => {
-      this.setState({
-        account: {
-          ...this.state.account,
-          blocks: response.data,
-          totalBlocks: response.total,
-        },
-      });
+    const [transfersRes, blocksRes] = await Promise.all([
+      api.getTransactions({ address, limit: 1000 }),
+      api.getBlocks({ witness: address, limit: 50 }),
+    ]);
+
+    const transactions = transfersRes.data;
+    const fromTransfers = transfersRes.data.filter(d => isTransactionTransfer(d) && d.data.from === address);
+    const toTransfers = transfersRes.data.filter(d => isTransactionTransfer(d) && d.data.to === address);
+    const blocks = blocksRes.data;
+    const totalBlocks = blocksRes.total;
+
+    this.setState({
+      account: {
+        ...this.state.account,
+        transactions,
+        blocks,
+        totalBlocks,
+        fromTransfers,
+        toTransfers,
+      },
     });
   }
 
@@ -111,7 +123,11 @@ class AccountPage extends React.PureComponent {
               <ul className="nav nav-tabs bigger">
                 <li className="nav-item">
                   <button
-                    className={this.isTab('balances', true) ? 'nav-link active' : 'nav-link'}
+                    className={
+                      this.isTab('balances', true)
+                        ? 'nav-link active'
+                        : 'nav-link'
+                    }
                     onClick={() => {
                       this.setState({ activeTab: 'balances' });
                     }}
@@ -121,7 +137,9 @@ class AccountPage extends React.PureComponent {
                 </li>
                 <li className="nav-item">
                   <button
-                    className={this.isTab('transfers') ? 'nav-link active' : 'nav-link'}
+                    className={
+                      this.isTab('transfers') ? 'nav-link active' : 'nav-link'
+                    }
                     onClick={() => {
                       this.setState({ activeTab: 'transfers' });
                     }}
@@ -131,7 +149,21 @@ class AccountPage extends React.PureComponent {
                 </li>
                 <li className="nav-item">
                   <button
-                    className={this.isTab('votes') ? 'nav-link active' : 'nav-link'}
+                    className={
+                      this.isTab('transactions') ? 'nav-link active' : 'nav-link'
+                    }
+                    onClick={() => {
+                      this.setState({ activeTab: 'transactions' });
+                    }}
+                  >
+                    Transactions
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={
+                      this.isTab('votes') ? 'nav-link active' : 'nav-link'
+                    }
                     onClick={() => {
                       this.setState({ activeTab: 'votes' });
                     }}
@@ -141,7 +173,9 @@ class AccountPage extends React.PureComponent {
                 </li>
                 <li className="nav-item">
                   <button
-                    className={this.isTab('blocks') ? 'nav-link active' : 'nav-link'}
+                    className={
+                      this.isTab('blocks') ? 'nav-link active' : 'nav-link'
+                    }
                     onClick={() => {
                       this.setState({ activeTab: 'blocks' });
                     }}
@@ -183,16 +217,25 @@ class AccountPage extends React.PureComponent {
                   <div className="col-12 col-lg-6">
                     <h6>
                       <span className="icon-up red" />
-                      <span>Transfers From ({account.fromTransfers.length})</span>
+                      <span>
+                        Transfers From ({account.fromTransfers.length})
+                      </span>
                     </h6>
-                    <TransactionList transactions={account.fromTransfers} />
+                    <TransferList transfers={account.fromTransfers} />
                   </div>
                   <div className="col-12 col-lg-6">
                     <h6>
                       <span className="icon-down green" />
                       <span>Transfers To ({account.toTransfers.length})</span>
                     </h6>
-                    <TransactionList transactions={account.toTransfers} />
+                    <TransferList transfers={account.toTransfers} />
+                  </div>
+                </div>
+              )}
+              {this.isTab('transactions') && (
+                <div className="row">
+                  <div className="col-12">
+                    <TransactionList transactions={account.transactions} />
                   </div>
                 </div>
               )}
@@ -241,7 +284,10 @@ class AccountPage extends React.PureComponent {
                     <BlockList blocks={account.blocks} />
                     {account.blocks &&
                       account.blocks.length >= 50 && (
-                        <p>Note: Showing most recent 50 of {account.totalBlocks} blocks only</p>
+                        <p>
+                          Note: Showing most recent 50 of {account.totalBlocks}{' '}
+                          blocks only
+                        </p>
                       )}
                   </div>
                 </div>

@@ -22,4 +22,8 @@ function formatCurrency(amount, decimals = 6) {
     .replace(new RegExp(re, 'g'), '$&,');
 }
 
-export { formatTime, formatCurrency };
+function isTransactionTransfer(trans = {}) {
+  return ['TRANSFERASSETCONTRACT', 'TRANSFERCONTRACT'].includes(trans.contractType);
+}
+
+export { formatTime, formatCurrency, isTransactionTransfer };

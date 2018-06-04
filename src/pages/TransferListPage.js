@@ -1,15 +1,15 @@
 import React from 'react';
-import { AccountList, Loading } from '../components';
+import { TransferList, Loading } from '../components';
 import api from '../api';
 
-class AccountListPage extends React.PureComponent {
+class TransferListPage extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       fetching: false,
-      accounts: null,
-      totalAccounts: 0,
+      transfers: null,
+      totalTransfers: 0,
       currentPage: 1,
       limit: 40,
     };
@@ -28,20 +28,20 @@ class AccountListPage extends React.PureComponent {
       fetching: true,
     });
 
-    return api.getAccounts(limit, skip).then((response) => {
+    return api.getTransfers({ limit, skip }).then((response) => {
       this.setState({
-        accounts: response.data,
-        totalAccounts: response.total,
+        transfers: response.data,
+        totalTransfers: response.total,
         fetching: false,
       });
     });
   }
 
   goToPage(page) {
-    const { limit, totalAccounts } = this.state;
+    const { limit, totalTransfers } = this.state;
     const skip = limit * (page - 1);
 
-    const totalPages = Math.ceil(totalAccounts / limit);
+    const totalPages = Math.ceil(totalTransfers / limit);
     if (page < 1 || page > totalPages) {
       return;
     }
@@ -55,11 +55,11 @@ class AccountListPage extends React.PureComponent {
 
   render() {
     const {
-      fetching, accounts, totalAccounts, currentPage, limit,
+      fetching, transfers, totalTransfers, currentPage, limit,
     } = this.state;
 
     let pagesToRender = [];
-    const totalPages = Math.ceil(totalAccounts / limit);
+    const totalPages = Math.ceil(totalTransfers / limit);
     const maxPages = 10;
 
     for (let i = 0; i < maxPages; i += 1) {
@@ -75,15 +75,15 @@ class AccountListPage extends React.PureComponent {
       <div className="content-box">
         {pagesToRender.length > 0 && (
           <div className="row">
-            <div className="col-12 pl-1 pr-1">
+            <div className="col-12">
               <div className="block-box p-1">
                 <div className="row">
                   <div className="col-sm-12 col-md-5">
                     <p className="pagination-info">
                       {`Showing ${(currentPage - 1) * limit + 1} to ${Math.min(
-                        totalAccounts,
+                        totalTransfers,
                         currentPage * limit,
-                      )} of ${totalAccounts} accounts`}
+                      )} of ${totalTransfers} transfers`}
                     </p>
                   </div>
                   <div className="col-sm-12 col-md-7">
@@ -124,12 +124,12 @@ class AccountListPage extends React.PureComponent {
           </div>
         )}
         <div className="row">
-          {!accounts || fetching ? (
+          {!transfers || fetching ? (
             <Loading />
           ) : (
             <React.Fragment>
               <div className="col-12">
-                <AccountList accounts={accounts} />
+                <TransferList transfers={transfers} />
               </div>
             </React.Fragment>
           )}
@@ -139,4 +139,4 @@ class AccountListPage extends React.PureComponent {
   }
 }
 
-export default AccountListPage;
+export default TransferListPage;

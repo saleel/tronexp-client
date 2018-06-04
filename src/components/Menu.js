@@ -45,6 +45,11 @@ const Menu = ({ history }) => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/transfers">
+                    <span>Transfers</span>
+                  </Link>
+                </li>
+                <li>
                   <Link to="/accounts">
                     <span>Accounts</span>
                   </Link>

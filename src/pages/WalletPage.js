@@ -1,6 +1,6 @@
 import React from 'react';
 import QRious from 'qrious';
-import { TransactionList, Loading } from '../components';
+import { TransferList, Loading } from '../components';
 import api from '../api';
 
 class WalletPage extends React.PureComponent {
@@ -106,11 +106,11 @@ class WalletPage extends React.PureComponent {
 
     let set1;
     let set2;
-    const { transactions } = account;
+    const { transfers } = account;
 
-    if (transactions && transactions.length > 0) {
-      set1 = transactions.slice(0, transactions.length / 2);
-      set2 = transactions.slice(transactions.length / 2, transactions.length);
+    if (transfers && transfers.length > 0) {
+      set1 = transfers.slice(0, transfers.length / 2);
+      set2 = transfers.slice(transfers.length / 2, transfers.length);
     }
 
     const availableTokens = account.tokenBalances.length
@@ -146,7 +146,7 @@ class WalletPage extends React.PureComponent {
                     <span className="icon-down green ml-3" />
                     <span>{account.toTransCount}</span>
                   </div>
-                  <div className="label">Transactions</div>
+                  <div className="label">Transfers</div>
                 </div>
               </div>
             </div>
@@ -314,12 +314,12 @@ class WalletPage extends React.PureComponent {
                 </li>
                 <li className="nav-item">
                   <a
-                    className={this.isTab('transactions') ? 'nav-link active' : 'nav-link'}
+                    className={this.isTab('transfers') ? 'nav-link active' : 'nav-link'}
                     onClick={() => {
-                      this.setState({ activeTab: 'transactions' });
+                      this.setState({ activeTab: 'transfers' });
                     }}
                   >
-                    Transactions
+                    Transfers
                   </a>
                 </li>
               </ul>
@@ -351,20 +351,20 @@ class WalletPage extends React.PureComponent {
                   )}
                 </div>
               )}
-              {this.isTab('transactions') &&
-                (transactions ? (
-                  transactions.length ? (
+              {this.isTab('transfers') &&
+                (transfers ? (
+                  transfers.length ? (
                     <div className="row">
                       <div className="col-12 col-lg-6">
-                        <TransactionList transactions={set1} />
+                        <TransferList transfers={set1} />
                       </div>
                       <div className="col-12 col-lg-6">
-                        <TransactionList transactions={set2} />
+                        <TransferList transfers={set2} />
                       </div>
                     </div>
                   ) : (
                     <div className="block-box">
-                      <p className="m-0">No transactions found</p>
+                      <p className="m-0">No transfers found</p>
                     </div>
                   )
                 ) : (
